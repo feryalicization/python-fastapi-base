@@ -14,8 +14,8 @@ load_dotenv()
 DATABASE_URL = os.getenv('DATABASE_URL') 
 
 app = FastAPI(
-    title="Feedback API",
-    description="An API for collecting feedback scores",
+    title="MultitudeX API",
+    description="API for feedback scores",
     version="1.0.0"
 )
 
