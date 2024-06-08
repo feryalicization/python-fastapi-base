@@ -52,7 +52,7 @@ async def shutdown():
 
 
 
-@app.post("/feedback/", response_model=Feedback, summary="Submit Feedback", description="Submit a feedback score between 1 and 5.")
+@app.post("/feedback", response_model=Feedback, summary="Submit Feedback", description="Submit a feedback score between 1 and 5.")
 async def submit_feedback(feedback: FeedbackCreate, session: AsyncSession = Depends(get_session)):
     """
     Submit a feedback score.
@@ -61,7 +61,7 @@ async def submit_feedback(feedback: FeedbackCreate, session: AsyncSession = Depe
     """
     return await create_feedback(feedback, session)
 
-@app.get("/feedback/{feedback_id}", response_model=Feedback, summary="Get Feedback", description="Get a feedback by its ID.")
+@app.get("/feedback{feedback_id}", response_model=Feedback, summary="Get Feedback", description="Get a feedback by its ID.")
 async def read_feedback(feedback_id: int, session: AsyncSession = Depends(get_session)):
     feedback = await get_feedback(feedback_id, session)
     if feedback is None:
@@ -72,14 +72,14 @@ async def read_feedback(feedback_id: int, session: AsyncSession = Depends(get_se
 async def read_feedbacks(session: AsyncSession = Depends(get_session)):
     return await get_all_feedbacks(session)
 
-@app.put("/feedback/{feedback_id}", response_model=Feedback, summary="Update Feedback", description="Update a feedback by its ID.")
+@app.put("/feedback{feedback_id}", response_model=Feedback, summary="Update Feedback", description="Update a feedback by its ID.")
 async def update_feedback_endpoint(feedback_id: int, feedback: FeedbackUpdate, session: AsyncSession = Depends(get_session)):
     updated_feedback = await update_feedback(feedback_id, feedback, session)
     if updated_feedback is None:
         raise HTTPException(status_code=404, detail="Feedback not found")
     return updated_feedback
 
-@app.delete("/feedback/{feedback_id}", summary="Delete Feedback", description="Delete a feedback by its ID.")
+@app.delete("/feedback{feedback_id}", summary="Delete Feedback", description="Delete a feedback by its ID.")
 async def delete_feedback_endpoint(feedback_id: int, session: AsyncSession = Depends(get_session)):
     deleted = await delete_feedback(feedback_id, session)
     if not deleted:
