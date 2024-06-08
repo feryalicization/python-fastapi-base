@@ -7,7 +7,7 @@ from feedback.models import Base
 from feedback.schemas import FeedbackCreate, Feedback, FeedbackUpdate
 from feedback.crud import create_feedback, get_feedback, update_feedback, delete_feedback, get_all_feedbacks
 from typing import List 
-
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()  
 
@@ -18,6 +18,17 @@ app = FastAPI(
     description="API for feedback scores",
     version="1.0.0"
 )
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],  
+    allow_headers=["*"], 
+)
+
 
 if not DATABASE_URL:
     raise ValueError("No DATABASE_URL environment variable set")
